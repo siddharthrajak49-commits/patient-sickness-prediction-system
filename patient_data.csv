@@ -1,0 +1,101 @@
+Age,Gender,BloodPressure,HeartRate,Cholesterol,Diabetes,Smoking,ExerciseLevel,BMI,Diagnosis
+35,Male,147,52,172,1,1,Medium,20.9,Healthy
+24,Female,171,118,150,1,1,High,26.1,Sick
+42,Male,167,85,193,1,1,High,18.7,Sick
+84,Male,126,120,274,1,1,Low,19.0,At Risk
+85,Female,119,60,151,1,0,High,29.2,Sick
+27,Female,129,58,180,0,1,Low,29.7,Healthy
+49,Female,92,60,229,0,1,Low,30.0,Sick
+29,Male,135,59,153,1,0,Low,31.5,Healthy
+34,Male,119,59,286,0,1,High,32.8,Sick
+41,Female,128,120,155,0,1,Medium,30.4,At Risk
+40,Female,171,109,279,1,1,Medium,29.4,Sick
+78,Male,160,71,207,0,1,High,31.6,At Risk
+29,Female,80,65,251,1,1,Low,33.6,At Risk
+56,Female,120,82,156,1,0,High,18.6,Sick
+76,Female,126,93,291,1,1,Medium,25.0,Sick
+26,Male,142,70,231,0,0,Low,24.9,Sick
+76,Female,92,89,237,1,0,High,23.9,At Risk
+62,Male,169,94,278,0,0,High,33.9,At Risk
+63,Female,143,81,183,0,1,Low,27.1,Healthy
+25,Female,103,94,268,1,0,High,26.7,Sick 
+18,Male,84,104,192,1,0,Medium,24.6,At Risk
+64,Male,175,112,152,0,0,High,31.4,At Risk
+47,Female,98,109,283,0,1,Low,23.7,At Risk
+27,Male,95,59,172,1,0,High,30.4,Healthy
+40,Male,159,75,229,0,1,Medium,28.0,At Risk
+69,Female,112,90,244,1,1,Medium,34.2,At Risk
+60,Male,145,82,292,1,1,Medium,26.8,Sick
+54,Female,169,96,227,0,0,Low,25.5,At Risk
+45,Male,113,54,177,0,0,Low,29.9,Healthy
+41,Male,112,119,152,1,0,Medium,34.3,Healthy
+77,Female,138,85,220,0,1,Medium,22.4,Healthy
+60,Male,158,73,163,0,1,Medium,34.7,Healthy
+22,Female,101,119,227,0,0,Medium,24.3,At Risk
+33,Male,101,86,285,1,1,Medium,19.7,Healthy
+78,Male,176,115,261,0,0,Medium,22.6,Healthy
+22,Female,139,67,163,0,1,Medium,31.4,Healthy
+77,Female,178,71,267,0,0,Low,26.2,Sick
+42,Female,166,93,280,0,1,Low,28.5,Sick
+80,Female,103,78,242,1,0,High,28.8,At Risk
+23,Female,170,67,172,0,1,Medium,34.9,Healthy
+76,Male,159,91,154,1,0,Low,26.8,Healthy
+85,Male,175,116,182,1,0,High,32.0,Healthy
+41,Male,162,71,206,1,0,Medium,25.3,Sick
+36,Male,113,92,184,1,0,Medium,32.6,At Risk
+63,Male,180,74,184,1,0,High,21.1,Healthy
+28,Male,86,75,201,0,1,High,32.7,At Risk
+24,Female,86,107,181,0,1,Medium,27.9,Healthy
+90,Female,120,111,168,0,0,Medium,19.1,At Risk
+42,Male,137,73,201,0,1,Low,21.4,Healthy
+72,Female,119,116,300,0,0,Medium,32.4,At Risk
+86,Female,120,108,294,0,1,Low,25.7,At Risk
+78,Male,104,86,161,0,0,Medium,19.4,Healthy
+46,Male,92,109,265,0,0,Medium,21.3,Healthy
+43,Male,127,118,244,1,1,Low,20.5,At Risk
+54,Male,100,98,166,0,0,Low,19.3,At Risk
+73,Male,143,64,220,1,1,High,29.0,Healthy
+55,Female,167,53,299,0,1,Medium,25.1,At Risk
+71,Male,127,54,296,0,1,Low,28.5,Healthy
+28,Female,82,109,172,1,1,High,22.9,At Risk
+79,Male,88,94,252,0,0,Low,27.7,Sick
+30,Female,143,51,254,1,1,Low,31.5,Healthy
+55,Male,91,86,282,0,0,Low,32.5,At Risk
+76,Female,107,109,271,1,1,Medium,33.8,At Risk
+43,Female,101,99,267,0,0,Medium,32.7,Healthy
+61,Male,98,61,201,0,0,High,32.4,At Risk
+35,Male,174,82,235,0,0,High,18.8,Sick
+51,Female,179,117,235,1,1,Medium,29.4,At Risk
+70,Male,112,50,276,0,1,Medium,19.1,Healthy
+71,Female,103,93,213,0,1,Medium,25.6,Healthy
+53,Male,81,103,183,0,0,High,30.0,Sick
+59,Female,105,54,259,1,0,High,26.6,At Risk
+60,Male,158,99,282,1,1,Low,33.3,Healthy
+68,Male,117,118,162,0,1,Medium,34.5,Healthy
+40,Female,163,50,191,1,1,Medium,24.2,Sick
+89,Female,135,78,155,1,0,Medium,18.7,At Risk
+48,Male,146,88,276,0,1,High,32.4,Sick
+84,Male,119,57,255,0,1,Medium,25.0,Healthy
+56,Female,119,70,217,0,1,High,33.8,Healthy
+50,Female,133,97,290,1,1,Medium,26.5,Sick
+81,Female,119,73,254,0,1,Low,29.4,Sick
+71,Female,125,106,158,1,0,Medium,21.5,Healthy
+74,Female,170,54,242,0,1,Medium,25.5,Sick
+44,Female,171,116,226,0,0,High,21.6,Sick
+85,Female,134,90,223,1,1,Low,34.9,Sick
+54,Male,107,93,186,1,0,Medium,29.6,Healthy
+76,Male,128,99,227,1,1,Low,34.5,At Risk
+29,Male,143,95,203,1,0,High,24.4,Healthy
+43,Male,116,88,165,1,1,Low,23.2,At Risk
+30,Male,173,51,240,0,0,Medium,23.4,Sick
+44,Female,159,71,167,0,1,Low,33.7,Healthy
+45,Female,147,100,205,1,1,Low,20.3,Healthy
+86,Female,150,112,159,1,1,Medium,21.5,At Risk
+83,Female,179,50,235,0,0,High,30.8,At Risk
+76,Male,122,73,251,1,0,High,21.1,Sick
+78,Male,114,71,214,1,0,High,26.6,Sick
+29,Male,90,70,185,1,0,Low,27.2,Sick
+62,Male,122,65,266,0,0,High,26.1,Healthy
+88,Male,161,111,151,0,0,Low,32.1,At Risk
+46,Male,124,98,162,1,0,Medium,27.3,Healthy
+55,Female,91,93,238,0,1,Low,32.2,Healthy

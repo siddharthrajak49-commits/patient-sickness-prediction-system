@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Patient Health Report</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f7fa;
+      padding: 40px;
+      margin: 0;
+    }
+    .report-card {
+      max-width: 600px;
+      margin: auto;
+      background: #fff;
+      border-radius: 15px;
+      padding: 30px;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #333;
+    }
+    .status {
+      font-size: 1.4em;
+      margin: 10px 0;
+      text-align: center;
+    }
+    .healthy { color: #28a745; }
+    .risk { color: #ffc107; }
+    .sick { color: #dc3545; }
+    .confidence {
+      text-align: center;
+      font-size: 1.2em;
+      margin-bottom: 20px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 15px 0;
+    }
+    table, th, td {
+      border: 1px solid #ddd;
+    }
+    th, td {
+      padding: 10px;
+      text-align: center;
+    }
+    th {
+      background: #f1f1f1;
+    }
+    .section {
+      margin-top: 20px;
+      padding: 15px;
+      border-radius: 10px;
+      background: #f9f9f9;
+    }
+    .problem { color: #dc3545; }
+    .suggestion { color: #155724; }
+  </style>
+</head>
+<body>
+  <div class="report-card">
+    <h1>🩺 Patient Health Report</h1>
+
+    <!-- Prediction Status -->
+    <div class="status 
+      {% if prediction == 'Healthy' %}healthy
+      {% elif prediction == 'At Risk' %}risk
+      {% else %}sick{% endif %}">
+      Prediction: <b>{{ prediction }}</b>
+    </div>
+
+    <!-- Confidence -->
+    <div class="confidence">
+      Confidence: <b>{{ confidence }}</b>
+    </div>
+
+    <!-- Probabilities Table -->
+    <h3>📊 Prediction Breakdown</h3>
+    <table>
+      <tr>
+        <th>Class</th>
+        <th>Probability</th>
+      </tr>
+      {% for label, prob in probabilities.items() %}
+      <tr>
+        <td>{{ label }}</td>
+        <td>{{ prob }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+
+    <!-- Problem Section -->
+    <div class="section problem">
+      <h3>⚠️ Problem Identified</h3>
+      <p>{{ problem }}</p>
+    </div>
+
+    <!-- Suggestion Section -->
+    <div class="section suggestion">
+      <h3>✅ Suggested Solution</h3>
+      <p>{{ suggestion }}</p>
+    </div>
+  </div>
+</body>
+</html>
