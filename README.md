@@ -33,17 +33,20 @@ patient-sickness-prediction-system/
 │── Training.xlsx / Testing.xlsx # Training & testing data
 │── templates/
 │   ├── index.html             # Homepage
-│   └── result.html            # Prediction result page
+│   ├── result.html            # Prediction result page
+│   ├── homepage.html          # Optional additional pages
+│   ├── symptom_checker.html
+│   └── Patient Health Prediction.html
 │── model.pkl / encoders.pkl   # Saved ML models
+│── README.md                  # Project documentation
 
 ---
 
 ## ⚙️ Installation & Setup  
 
 1. Clone the repository  
-   ```bash
-   git clone https://github.com/siddharthrajak49-commits/patient-sickness-prediction-system.git
-   cd patient-sickness-prediction-system
+  git clone https://github.com/siddharthrajak49-commits/patient-sickness-prediction-system.git
+cd patient-sickness-prediction-system
 #	Create virtual environment 
 python3 -m venv venv
 source venv/bin/activate   # Mac/Linux
@@ -53,10 +56,16 @@ venv\Scripts\activate      # Windows
 # run the flask app
 python app.py
 📊 Dataset
+The dataset includes patient health parameters such as:
+	•	Age
+	•	Test results
+	•	Other clinical features
 
+The model is trained using scikit-learn and serialized with pickle for deployment.
 The dataset used in this project includes patient health parameters such as age, test results, and other clinical features.
 Model is trained using scikit-learn, and serialized with pickle for deployment.
 🧑 Author
+<img width="1470" height="956" alt="Screenshot 2025-10-25 at 2 36 16 PM" src="https://github.com/user-attachments/assets/03ef2669-4717-4fda-b08b-c708bc0125fb" />
 
 👤 Snigdh Kumar
 	•	GitHub: @siddharthrajak49-commits
