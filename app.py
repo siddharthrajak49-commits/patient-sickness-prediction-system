@@ -19,8 +19,19 @@ with open("health_reports.pkl", "rb") as f:
 
 
 @app.route("/")
-def home():
+def welcome():
+    return render_template("homepage.html")
+
+
+@app.route("/form")
+def form():
     return render_template("index.html")
+
+
+# Symptom Checker Route
+@app.route("/symptom-checker")
+def symptom_checker():
+    return render_template("symptom_checker.html")
 
 
 @app.route("/predict", methods=["POST"])
@@ -48,7 +59,7 @@ def predict():
 
         # Build probability report
         prob_report = {
-            label_encoder.inverse_transform([i])[0]: f"{p*100:.1f}%"
+            label_encoder.inverse_transform([i])[0]: round(p*100, 1)
             for i, p in enumerate(probs)
         }
 
@@ -61,7 +72,7 @@ def predict():
         return render_template(
             "result.html",
             prediction=label,
-            confidence=f"{confidence:.1f}%",
+            confidence=round(confidence, 1),
             probabilities=prob_report,
             problem=report["problem"],
             suggestion=report["suggestion"]

@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Patient Health Prediction</title>
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(135deg, #74ebd5 0%, #ACB6E5 100%);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Segoe UI', sans-serif;
+    }
+    .card {
+      border-radius: 20px;
+      box-shadow: 0px 8px 20px rgba(0,0,0,0.2);
+      padding: 30px;
+    }
+    .form-label {
+      font-weight: 600;
+    }
+    .helper-text {
+      font-size: 0.85rem;
+      color: gray;
+    }
+    .btn-custom {
+      background: linear-gradient(135deg, #007bff, #00c6ff);
+      border: none;
+      font-weight: bold;
+      color: white;
+      border-radius: 10px;
+      transition: transform 0.2s ease;
+    }
+    .btn-custom:hover {
+      transform: scale(1.05);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <div class="card">
+          <h2 class="text-center mb-4">🩺 Patient Health Prediction</h2>
+          <form action="/predict" method="post">
+
+            <!-- Age -->
+            <div class="mb-3">
+              <label class="form-label">👤 Age</label>
+              <input type="number" class="form-control" name="Age" id="inputAge" min="1" max="120" placeholder="e.g., 25" required>
+              <div class="helper-text">Typical healthy range: 18 - 65</div>
+              <small id="ageWarning" class="text-danger" style="display:none;"></small>
+            </div>
+
+            <!-- Gender -->
+            <div class="mb-3">
+              <label class="form-label">⚥ Gender</label>
+              <select class="form-control" name="Gender" required>
+                <option value="">Select...</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+              </select>
+            </div>
+
+            <!-- Blood Pressure -->
+            <div class="mb-3">
+              <label class="form-label">🩸 Blood Pressure (mmHg)</label>
+              <input type="number" class="form-control" name="BloodPressure" id="inputBloodPressure" placeholder="e.g., 120" required>
+              <div class="helper-text">Normal: ~120 (Systolic)</div>
+              <small id="bpWarning" class="text-danger" style="display:none;"></small>
+            </div>
+
+            <!-- Heart Rate -->
+            <div class="mb-3">
+              <label class="form-label">❤️ Heart Rate (bpm)</label>
+              <input type="number" class="form-control" name="HeartRate" id="inputHeartRate" placeholder="e.g., 72" required>
+              <div class="helper-text">Normal: 60 - 100 bpm</div>
+              <small id="hrWarning" class="text-danger" style="display:none;"></small>
+            </div>
+
+            <!-- Cholesterol -->
+            <div class="mb-3">
+              <label class="form-label">🧪 Cholesterol (mg/dL)</label>
+              <input type="number" class="form-control" name="Cholesterol" id="inputCholesterol" placeholder="e.g., 170" required>
+              <div class="helper-text">Normal: &lt; 200 mg/dL</div>
+              <small id="cholWarning" class="text-danger" style="display:none;"></small>
+            </div>
+
+            <!-- Diabetes -->
+            <div class="mb-3">
+              <label class="form-label">🍬 Diabetes</label>
+              <select class="form-control" name="Diabetes" required>
+                <option value="No">No</option>
+                <option value="Yes">Yes</option>
+              </select>
+            </div>
+
+            <!-- Smoking -->
+            <div class="mb-3">
+              <label class="form-label">🚬 Smoking</label>
+              <select class="form-control" name="Smoking" required>
+                <option value="No">No</option>
+                <option value="Yes">Yes</option>
+              </select>
+            </div>
+
+            <!-- Exercise Level -->
+            <div class="mb-3">
+              <label class="form-label">🏃 Exercise Level</label>
+              <select class="form-control" name="ExerciseLevel" required>
+                <option value="Low">Low</option>
+                <option value="Medium">Medium</option>
+                <option value="High">High</option>
+              </select>
+            </div>
+
+            <!-- BMI -->
+            <div class="mb-3">
+              <label class="form-label">⚖️ BMI</label>
+              <input type="number" step="0.1" class="form-control" name="BMI" id="inputBMI" placeholder="e.g., 22.5" required>
+              <div class="helper-text">Normal: 18.5 - 24.9</div>
+              <small id="bmiWarning" class="text-danger" style="display:none;"></small>
+            </div>
+
+            <div class="d-grid">
+              <button type="submit" class="btn btn-custom">🔍 Predict</button>
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Helper function to show/hide warning
+    function setWarning(input, warningId, message, show) {
+      const warn = document.getElementById(warningId);
+      if (show) {
+        warn.textContent = message;
+        warn.style.display = '';
+        input.classList.add('is-invalid');
+      } else {
+        warn.textContent = '';
+        warn.style.display = 'none';
+        input.classList.remove('is-invalid');
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+      // Age validation
+      const ageInput = document.getElementById('inputAge');
+      ageInput.addEventListener('input', function() {
+        const val = Number(ageInput.value);
+        setWarning(ageInput, 'ageWarning', 'Age should be between 1 and 120.', val < 1 || val > 120);
+      });
+
+      // Blood Pressure validation
+      const bpInput = document.getElementById('inputBloodPressure');
+      bpInput.addEventListener('input', function() {
+        const val = Number(bpInput.value);
+        setWarning(bpInput, 'bpWarning', 'Blood Pressure should be between 80 and 200 mmHg.', val < 80 || val > 200);
+      });
+
+      // Heart Rate validation
+      const hrInput = document.getElementById('inputHeartRate');
+      hrInput.addEventListener('input', function() {
+        const val = Number(hrInput.value);
+        setWarning(hrInput, 'hrWarning', 'Heart Rate should be between 40 and 150 bpm.', val < 40 || val > 150);
+      });
+
+      // Cholesterol validation
+      const cholInput = document.getElementById('inputCholesterol');
+      cholInput.addEventListener('input', function() {
+        const val = Number(cholInput.value);
+        setWarning(cholInput, 'cholWarning', 'Cholesterol should be between 100 and 300 mg/dL.', val < 100 || val > 300);
+      });
+
+      // BMI validation
+      const bmiInput = document.getElementById('inputBMI');
+      bmiInput.addEventListener('input', function() {
+        const val = Number(bmiInput.value);
+        setWarning(bmiInput, 'bmiWarning', 'BMI should be between 10 and 40.', val < 10 || val > 40);
+      });
+    });
+  </script>
+</body>
+</html>

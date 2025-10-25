@@ -1,110 +1,251 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Patient Health Report</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background: #f4f7fa;
-      padding: 40px;
-      margin: 0;
+      background: linear-gradient(135deg, #74ebd5, #ACB6E5);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 40px 20px;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
     .report-card {
-      max-width: 600px;
-      margin: auto;
-      background: #fff;
-      border-radius: 15px;
-      padding: 30px;
-      box-shadow: 0 6px 15px rgba(0,0,0,0.1);
-    }
-    h1 {
-      text-align: center;
-      margin-bottom: 20px;
-      color: #333;
-    }
-    .status {
-      font-size: 1.4em;
-      margin: 10px 0;
-      text-align: center;
-    }
-    .healthy { color: #28a745; }
-    .risk { color: #ffc107; }
-    .sick { color: #dc3545; }
-    .confidence {
-      text-align: center;
-      font-size: 1.2em;
-      margin-bottom: 20px;
-    }
-    table {
+      max-width: 900px;
       width: 100%;
-      border-collapse: collapse;
-      margin: 15px 0;
+      background: #fff;
+      border-radius: 1.5rem;
+      padding: 2.5rem 3rem;
+      box-shadow: 0 0.75rem 1.5rem rgba(0,0,0,0.1);
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
     }
-    table, th, td {
-      border: 1px solid #ddd;
+    .report-card h1 {
+      background: linear-gradient(90deg, #74ebd5, #ACB6E5);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-weight: 900;
+      font-size: 2.5rem;
+      text-align: center;
+      margin-bottom: 1.5rem;
     }
-    th, td {
-      padding: 10px;
+    .status-text {
+      font-weight: 800;
+      font-size: 2.5rem;
+    }
+    .status-healthy {
+      color: #198754;
+    }
+    .status-risk {
+      color: #ffc107;
+    }
+    .status-sick {
+      color: #dc3545;
+    }
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      font-size: 1.25rem;
+    }
+    .problem-header {
+      color: #dc3545;
+    }
+    .suggestion-header {
+      color: #198754;
+    }
+    .confidence-container {
+      margin-top: 1rem;
+      width: 100%;
+      max-width: 320px;
+    }
+    .progress {
+      height: 1.25rem;
+      border-radius: 0.75rem;
+      background-color: #e9ecef;
+      box-shadow: inset 0 1px 3px rgb(0 0 0 / 0.1);
+    }
+    .progress-bar {
+      font-weight: 600;
+      font-size: 0.9rem;
+      line-height: 1.25rem;
+      color: #fff;
+      text-align: center;
+      white-space: nowrap;
+      transition: width 0.6s ease;
+    }
+    .confidence-label {
+      font-size: 1.125rem;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+    }
+    .row.align-items-center.mb-4 {
+      align-items: center;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+    .col-md-6.text-center.text-md-start {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
       text-align: center;
     }
-    th {
-      background: #f1f1f1;
+    @media(min-width: 768px) {
+      .col-md-6.text-center.text-md-start {
+        align-items: flex-start;
+        text-align: left;
+      }
     }
-    .section {
-      margin-top: 20px;
-      padding: 15px;
-      border-radius: 10px;
-      background: #f9f9f9;
+    .col-md-6 {
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
-    .problem { color: #dc3545; }
-    .suggestion { color: #155724; }
+    canvas#confidenceChart {
+      max-width: 300px;
+      margin: auto;
+      display: block;
+    }
+    table.table {
+      font-size: 1rem;
+    }
+    p.fs-6 {
+      font-size: 1rem;
+      line-height: 1.4;
+    }
   </style>
 </head>
 <body>
-  <div class="report-card">
+  <div class="report-card shadow">
     <h1>🩺 Patient Health Report</h1>
 
-    <!-- Prediction Status -->
-    <div class="status 
-      {% if prediction == 'Healthy' %}healthy
-      {% elif prediction == 'At Risk' %}risk
-      {% else %}sick{% endif %}">
-      Prediction: <b>{{ prediction }}</b>
+    <div class="row align-items-center mb-4">
+      <div class="col-md-6 text-center text-md-start">
+        <div class="status-text 
+          {% if prediction == 'Healthy' %}status-healthy
+          {% elif prediction == 'At Risk' %}status-risk
+          {% else %}status-sick{% endif %}">
+          {{ prediction }}
+        </div>
+        <div class="confidence-container">
+          <div class="confidence-label">Confidence: <span class="fw-bold">{{ confidence }}%</span></div>
+          <div class="progress" role="progressbar" aria-valuenow="{{ confidence }}" aria-valuemin="0" aria-valuemax="100">
+            <div class="progress-bar 
+              {% if prediction == 'Healthy' %}bg-success
+              {% elif prediction == 'At Risk' %}bg-warning
+              {% else %}bg-danger{% endif %}" style="width: {{ confidence }}%;">
+              {{ confidence }}%
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <canvas id="confidenceChart"></canvas>
+      </div>
     </div>
 
-    <!-- Confidence -->
-    <div class="confidence">
-      Confidence: <b>{{ confidence }}</b>
+    <h3 class="mb-3">📊 Prediction Breakdown</h3>
+    <div class="table-responsive">
+      <table class="table table-striped table-bordered text-center align-middle">
+        <thead class="table-light">
+          <tr>
+            <th scope="col">Class</th>
+            <th scope="col">Probability</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for label, prob in probabilities.items() %}
+          <tr>
+            <td>{{ label }}</td>
+            <td>{{ prob }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
     </div>
 
-    <!-- Probabilities Table -->
-    <h3>📊 Prediction Breakdown</h3>
-    <table>
-      <tr>
-        <th>Class</th>
-        <th>Probability</th>
-      </tr>
-      {% for label, prob in probabilities.items() %}
-      <tr>
-        <td>{{ label }}</td>
-        <td>{{ prob }}</td>
-      </tr>
-      {% endfor %}
-    </table>
-
-    <!-- Problem Section -->
-    <div class="section problem">
-      <h3>⚠️ Problem Identified</h3>
-      <p>{{ problem }}</p>
+    <div class="mt-5">
+      <div class="section-header problem-header">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#dc3545" class="bi bi-exclamation-triangle-fill" viewBox="0 0 16 16">
+          <path d="M8.982 1.566a1.13 1.13 0 0 0-1.964 0L.165 13.233c-.457.778.091 1.767.982 1.767h13.706c.89 0 1.438-.99.982-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1-2.002 0 1 1 0 0 1 2.002 0z"/>
+        </svg>
+        <span>Problem Identified</span>
+      </div>
+      <p class="fs-6">{{ problem }}</p>
     </div>
 
-    <!-- Suggestion Section -->
-    <div class="section suggestion">
-      <h3>✅ Suggested Solution</h3>
-      <p>{{ suggestion }}</p>
+    <div class="mt-4">
+      <div class="section-header suggestion-header">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#198754" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
+          <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM6.97 11.03a.75.75 0 0 0 1.07 0l3.992-3.993a.75.75 0 1 0-1.06-1.06L7.5 9.439 5.525 7.464a.75.75 0 1 0-1.06 1.06l2.505 2.506z"/>
+        </svg>
+        <span>Suggested Solution</span>
+      </div>
+      <p class="fs-6">{{ suggestion }}</p>
     </div>
   </div>
+
+  <script>
+    const ctx = document.getElementById('confidenceChart').getContext('2d');
+    const probabilitiesData = {{ probabilities | tojson | safe }};
+    const labels = Object.keys(probabilitiesData);
+    const dataValues = Object.values(probabilitiesData).map(val => parseFloat(val));
+    const colors = labels.map(label => {
+      if(label === 'Healthy') return '#198754';
+      if(label === 'At Risk') return '#ffc107';
+      if(label === 'Sick') return '#dc3545';
+      return '#6c757d';
+    });
+
+    new Chart(ctx, {
+      type: 'doughnut',
+      data: {
+        labels: labels,
+        datasets: [{
+          data: dataValues,
+          backgroundColor: colors,
+          borderColor: '#fff',
+          borderWidth: 2,
+          hoverOffset: 30,
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            position: 'bottom',
+            labels: {
+              font: {
+                size: 14,
+                weight: '600'
+              }
+            }
+          },
+          tooltip: {
+            callbacks: {
+              label: function(context) {
+                return context.label + ': ' + context.parsed.toFixed(1) + '%';
+              }
+            }
+          }
+        },
+        cutout: '70%',
+      }
+    });
+  </script>
+  <!-- Bootstrap Bundle JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
